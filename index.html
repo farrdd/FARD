@@ -290,7 +290,7 @@
   </div>
 </div>
 
-<footer>FARD — one-of-one mugs</footer>
+<footer>FARD — one-of-one mugs, hand-painted in-house</footer>
 
 <div class="contact-fab-wrap">
   <div class="contact-fab-row">
@@ -395,7 +395,7 @@ const SUPABASE_KEY = "sb_publishable_XwEYHt2KZOotcfQ7j3FIGQ_z_dUUpzj";
 const ADMIN_PASS = "admin123";      // change this before publishing
 const PAY_NUMBER = "01000361309";
 const WHATSAPP_NUMBER = "201000361309"; // change to your WhatsApp number, international format, no + or 00
-const ORDERS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyJqrScVGnLE8BU1fMltqy73gBpaojloj1Imjqdzmgvrj91pdL4Q0o9WQq19flZqTyK/exec";
+const ORDERS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby5yLZaykcP4KHWe3fcsnkjIZfIRiJpIIirzrqqzRnm-n7MBdG3Qfu7dBlOATdRqMyi/exec";
 const PER_PAGE = 6;
 
 let products = [];
@@ -538,6 +538,7 @@ async function submitOrder(){
   if(cart.length === 0){ alert('Your cart is empty — add a piece first.'); return; }
   const order = {
     items: cart.map(p => `${p.name} (${p.price} EGP)`).join(', '),
+    productIds: cart.map(p => p.id).join(','),
     totalPrice: cartTotal(),
     customerName: name,
     phone: phone,
