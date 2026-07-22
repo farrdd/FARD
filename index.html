@@ -3,12 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<meta name="description" content="FARD — hand-painted mugs, one copy of every design. When a piece sells, that design is retired for good.">
-<meta property="og:title" content="FARD — one-of-one hand-painted mugs">
-<meta property="og:description" content="Every FARD mug is hand-painted, start to finish. One copy exists. Once it sells, it's gone.">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#1C1A16">
 <title>FARD — one-of-one hand-painted mugs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,9 +23,8 @@
     --danger:#C0524A;
   }
   *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent;}
-  html{overflow-x:hidden; scrollbar-color:var(--glaze-deep) var(--bg);}
+  html{overflow-x:hidden;}
   body{
-    position:relative;
     overflow-x:hidden;
     background:
       radial-gradient(ellipse 900px 500px at 15% -10%, rgba(143,163,123,.08), transparent 60%),
@@ -41,16 +34,6 @@
     font-family:'Public Sans',system-ui,-apple-system,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
-  /* fine stoneware grain — subtle, sits above content via blend mode, never blocks interaction */
-  body::before{
-    content:''; position:fixed; inset:0; z-index:2; pointer-events:none;
-    opacity:.05; mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  }
-  ::-webkit-scrollbar{width:9px; height:9px;}
-  ::-webkit-scrollbar-track{background:var(--bg);}
-  ::-webkit-scrollbar-thumb{background:var(--glaze-deep); border-radius:20px; border:2px solid var(--bg);}
-  ::-webkit-scrollbar-thumb:hover{background:var(--glaze);}
   h1,h2,.brand,.stamp-title{font-family:'Fraunces',Georgia,serif;}
   .mono{font-family:'Space Mono',monospace;}
   a{color:inherit;}
@@ -79,6 +62,7 @@
     font-family:'Space Mono',monospace; font-size:10px; font-weight:700; min-width:17px; height:17px;
     border-radius:9px; display:flex; align-items:center; justify-content:center; padding:0 3px;
   }
+  .cart-list{max-height:44vh; overflow-y:auto; margin-bottom:14px;}
   .cart-item{display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--line);}
   .cart-item img{width:46px; height:46px; object-fit:cover; border-radius:4px; background:var(--bg-alt);}
   .cart-item .name{font-size:14px; font-weight:600;}
@@ -90,76 +74,45 @@
   .checkout-summary strong{color:var(--ink);}
 
   .hero{max-width:680px; margin:64px auto 12px; text-align:center; padding:0 20px;
-    animation:riseIn .7s ease both; position:relative; z-index:3;}
+    animation:riseIn .7s ease both;}
   .brand-mark{width:260px; height:auto; margin:0 auto 28px; display:block;}
-  .hero .eyebrow{font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--glaze); margin-bottom:16px;}
+  .hero .eyebrow{font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--glaze); margin-bottom:16px;}
   .hero h1{font-size:clamp(30px,5vw,44px); line-height:1.28; font-weight:500; letter-spacing:-.01em;}
   .hero h1 em{font-style:italic; color:var(--oxide); font-weight:500;}
   .hero p{color:var(--muted); margin-top:16px; font-size:15px; line-height:1.7; max-width:480px; margin-left:auto; margin-right:auto;}
-  .hero-meta{
-    display:flex; align-items:center; justify-content:center; gap:10px; margin-top:26px;
-    font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:rgba(167,156,135,.75);
-  }
-  .hero-meta span{opacity:.5;}
 
   @keyframes riseIn{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
-  @media (prefers-reduced-motion: reduce){
-    .hero{animation:none;}
-    .card{opacity:1; transform:none; transition:border-color .2s ease, box-shadow .2s ease;}
-  }
+  @media (prefers-reduced-motion: reduce){ .hero{animation:none;} }
 
   .wrap{max-width:1000px; margin:0 auto; padding:20px;}
   .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:22px; margin-top:36px;}
 
   .card{
     background:var(--panel); border:1px solid var(--line); border-radius:4px;
-    overflow:hidden; cursor:pointer; transition:transform .35s cubic-bezier(.19,1,.22,1), border-color .35s ease, box-shadow .35s ease;
-    opacity:0; transform:translateY(16px);
+    overflow:hidden; cursor:pointer; transition:transform .25s ease, border-color .25s ease;
   }
-  .card.in-view{opacity:1; transform:translateY(0);}
-  .card:hover{transform:translateY(-6px); border-color:rgba(143,163,123,.4); box-shadow:0 20px 40px -20px rgba(0,0,0,.55);}
+  .card:hover{transform:translateY(-4px); border-color:rgba(143,163,123,.35);}
   .card-media{position:relative; overflow:hidden; height:190px; background:var(--bg-alt);}
-  .card-media img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s cubic-bezier(.19,1,.22,1);}
+  .card-media img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease;}
   .card:hover .card-media img{transform:scale(1.06);}
-  .card-media::after{
-    content:''; position:absolute; inset:0; opacity:0; transition:opacity .35s ease;
-    background:linear-gradient(180deg, transparent 55%, rgba(0,0,0,.35));
-  }
-  .card:hover .card-media::after{opacity:1;}
 
   .stamp{
     position:absolute; top:10px; left:10px; width:56px; height:56px; border-radius:50%;
-    border:1px solid rgba(243,236,221,.5); background:rgba(28,26,22,.68); backdrop-filter:blur(3px);
-    box-shadow:inset 0 0 0 3px rgba(28,26,22,.7), inset 0 0 0 4px rgba(243,236,221,.22);
+    border:1.5px dashed rgba(243,236,221,.55); background:rgba(28,26,22,.62); backdrop-filter:blur(2px);
     color:var(--ink); display:flex; flex-direction:column; align-items:center; justify-content:center;
     transform:rotate(-8deg); text-align:center; line-height:1.1;
   }
   .stamp .n{font-family:'Space Mono',monospace; font-size:10px; font-weight:700;}
   .stamp .of{font-family:'Space Mono',monospace; font-size:6.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-top:2px;}
 
-  .card .info{padding:14px 16px 16px; border-top:1px solid var(--line);}
-  .card .info .tag{font-family:'Space Mono',monospace; font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--oxide); margin-bottom:6px; display:block;}
-  .card .info .name{font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:16px; margin-bottom:6px; letter-spacing:-.01em;}
+  .card .info{padding:14px 16px 16px;}
+  .card .info .name{font-family:'Fraunces',serif; font-weight:500; font-size:16px; margin-bottom:5px;}
   .card .info .price{font-family:'Space Mono',monospace; color:var(--glaze); font-size:13px;}
 
   .pager{display:flex; justify-content:center; gap:8px; margin:40px 0 10px;}
   .pager button{width:34px; height:34px; border-radius:4px; border:1px solid var(--line); background:transparent; color:var(--ink); cursor:pointer; font-family:'Space Mono',monospace; font-size:13px;}
   .pager button.active{background:var(--glaze); color:#16150F; border-color:var(--glaze);}
   .empty,.loading{text-align:center; color:var(--muted); padding:70px 0; font-size:14px;}
-
-  .skeleton{background:var(--panel); border:1px solid var(--line); border-radius:4px; overflow:hidden;}
-  .skeleton .card-media{background:var(--bg-alt);}
-  .skeleton .sk-line{height:12px; border-radius:3px; background:var(--bg-alt); margin:0 16px;}
-  .skeleton .sk-line.name{width:70%; margin-top:14px;}
-  .skeleton .sk-line.price{width:35%; margin-top:8px; margin-bottom:16px;}
-  .skeleton .card-media, .skeleton .sk-line{position:relative; overflow:hidden;}
-  .skeleton .card-media::after, .skeleton .sk-line::after{
-    content:''; position:absolute; inset:0;
-    background:linear-gradient(90deg, transparent, rgba(243,236,221,.06), transparent);
-    animation:shimmer 1.6s infinite;
-  }
-  @keyframes shimmer{ from{transform:translateX(-100%);} to{transform:translateX(100%);} }
-  @media (prefers-reduced-motion: reduce){ .skeleton .card-media::after, .skeleton .sk-line::after{animation:none;} }
 
   .modal-bg{position:fixed; inset:0; background:rgba(15,14,11,.72); display:none; align-items:center; justify-content:center; z-index:100; padding:16px;}
   .modal-bg.show{display:flex;}
@@ -176,58 +129,8 @@
     padding:5px 10px; border-radius:20px; background:var(--oxide-soft);
   }
 
-  /* ---------- CART DRAWER (dedicated, not a generic popup) ---------- */
-  .cart-overlay{
-    position:fixed; inset:0; background:rgba(15,14,11,.6); z-index:200;
-    opacity:0; pointer-events:none; transition:opacity .3s ease;
-  }
-  .cart-overlay.show{opacity:1; pointer-events:auto;}
-  .cart-drawer{
-    position:fixed; top:0; right:0; height:100%; width:420px; max-width:92vw;
-    background:var(--panel); border-left:1px solid var(--line); z-index:201;
-    display:flex; flex-direction:column; transform:translateX(100%);
-    transition:transform .4s cubic-bezier(.19,1,.22,1); box-shadow:-20px 0 50px rgba(0,0,0,.4);
-  }
-  .cart-overlay.show .cart-drawer{transform:translateX(0);}
-  .cart-drawer-head{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:22px 24px; border-bottom:1px solid var(--line); flex-shrink:0;
-  }
-  .cart-drawer-head h2{font-size:19px; font-weight:500; letter-spacing:-.01em;}
-  .cart-drawer-head .count-pill{
-    font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); margin-top:3px; display:block;
-  }
-  .cart-drawer-close{
-    background:none; border:1px solid var(--line); border-radius:4px; color:var(--muted);
-    cursor:pointer; width:34px; height:34px; display:flex; align-items:center; justify-content:center;
-    transition:border-color .15s ease, color .15s ease;
-  }
-  .cart-drawer-close:hover{border-color:var(--glaze); color:var(--glaze);}
-  .cart-drawer-body{flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:6px 24px;}
-  .cart-drawer-foot{border-top:1px solid var(--line); padding:18px 24px 22px; background:var(--panel); flex-shrink:0;}
-  .cart-empty{
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:80px 20px; color:var(--muted); gap:14px; height:100%;
-  }
-  .cart-empty svg{opacity:.4;}
-  .cart-empty .t{font-family:'Fraunces',serif; font-size:16px; color:var(--ink); font-weight:500;}
-  .cart-empty .d{font-size:13px; line-height:1.6;}
-
-  @media (max-width:640px){
-    .cart-drawer{
-      top:auto; bottom:0; right:0; left:0; width:100%; max-width:100%;
-      height:88vh; border-left:none; border-top:1px solid var(--line);
-      border-radius:16px 16px 0 0; transform:translateY(100%);
-    }
-    .cart-overlay.show .cart-drawer{transform:translateY(0);}
-    .cart-drawer-head{padding:18px 18px 16px;}
-    .cart-drawer-body{padding:4px 18px;}
-    .cart-drawer-foot{padding:14px 18px 20px;}
-  }
-
-  .btn{display:block; width:100%; padding:14px; background:var(--glaze); color:#16150F; border:none; border-radius:4px; font-family:'Public Sans',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; text-align:center; text-decoration:none; transition:background .2s ease, transform .12s ease;}
+  .btn{display:block; width:100%; padding:14px; background:var(--glaze); color:#16150F; border:none; border-radius:4px; font-family:'Public Sans',sans-serif; font-weight:600; font-size:14.5px; cursor:pointer; text-align:center; text-decoration:none; transition:background .2s ease;}
   .btn:hover{background:var(--glaze-deep); color:var(--ink);}
-  .btn:active{transform:scale(.98);}
   .btn.ghost{background:transparent; color:var(--ink); border:1px solid var(--line);}
   .btn.ghost:hover{background:var(--bg-alt);}
   .close{float:right; background:none; border:none; color:var(--muted); cursor:pointer; font-size:13px; font-family:'Space Mono',monospace;}
@@ -263,10 +166,6 @@
   .instagram-fab:hover{ background:#a2542f; color:var(--ink); }
 
   footer{text-align:center; padding:40px 16px 32px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); margin-top:50px; font-family:'Space Mono',monospace; letter-spacing:.04em;}
-  footer .foot-links{display:flex; justify-content:center; gap:18px; margin-bottom:14px;}
-  footer .foot-links a{color:var(--muted); text-decoration:none; transition:color .15s ease;}
-  footer .foot-links a:hover{color:var(--glaze);}
-  footer .foot-note{color:rgba(167,156,135,.6); font-size:10.5px; margin-top:8px;}
 
   #adminView{display:none; max-width:760px; margin:0 auto; padding:36px 20px;}
   .panel{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:22px; margin-bottom:26px;}
@@ -352,20 +251,15 @@
       <text x="260" y="120" font-family="Fraunces, Georgia, serif" font-size="40" fill="var(--ink)">fard</text>
       <text x="260" y="142" font-family="Fraunces, Georgia, serif" font-style="italic" font-size="13" fill="var(--muted)">no two alike</text>
     </svg>
-    <div class="eyebrow">No restocks · no reprints</div>
-    <h1>Painted once. Sold once. <em>Gone for good.</em></h1>
+    <div class="eyebrow">HAND PAINTED MUGS</div>
+    <h1>Painted once. Sold once. <em>Get your special one .</em></h1>
     <p>Every FARD mug is hand-painted from first sketch to final glaze — one copy exists. The moment it sells, that design is retired for good.</p>
-    <div class="hero-meta">Hand-thrown stoneware <span>·</span> Food-safe glaze <span>·</span> Made in Egypt</div>
   </div>
   <div class="wrap">
-    <div id="grid" class="grid">
-      <div class="card skeleton"><div class="card-media"></div><div class="sk-line name"></div><div class="sk-line price"></div></div>
-      <div class="card skeleton"><div class="card-media"></div><div class="sk-line name"></div><div class="sk-line price"></div></div>
-      <div class="card skeleton"><div class="card-media"></div><div class="sk-line name"></div><div class="sk-line price"></div></div>
-    </div>
+    <div id="grid" class="grid"><div class="loading">Loading the shelf…</div></div>
     <div id="pager" class="pager"></div>
   </div>
-  </div>
+</div>
 
 <div id="adminView">
   <div id="loginBox">
@@ -396,14 +290,7 @@
   </div>
 </div>
 
-<footer>
-  <div class="foot-links">
-    <a href="https://www.instagram.com/fard_mugs?igsh=bzJhZGg3YTV3dTZs" target="_blank">Instagram</a>
-    <a href="#" id="footWaLink" target="_blank">WhatsApp</a>
-  </div>
-  FARD — one-of-one mugs, hand-painted in-house
-  <div class="foot-note">Every piece is exactly as pictured — no two are ever repainted the same.</div>
-</footer>
+<footer>FARD — one-of-one mugs,</footer>
 
 <div class="contact-fab-wrap">
   <div class="contact-fab-row">
@@ -429,23 +316,14 @@
   </div>
 </div>
 
-<div class="cart-overlay" id="cartModal" onmousedown="if(event.target===this) closeModal('cartModal')">
-  <div class="cart-drawer" role="dialog" aria-label="Your cart">
-    <div class="cart-drawer-head">
-      <div>
-        <h2>Your cart</h2>
-        <span class="count-pill" id="cartCountLabel">0 pieces</span>
-      </div>
-      <button class="cart-drawer-close" onclick="closeModal('cartModal')" aria-label="Close cart">✕</button>
-    </div>
-    <div class="cart-drawer-body">
-      <div id="cartList" class="cart-list" style="max-height:none;"></div>
-    </div>
-    <div class="cart-drawer-foot">
-      <div class="cart-total"><span>Total</span><span id="cartTotal">0 EGP</span></div>
-      <button class="btn" onclick="openCartCheckout()">Proceed to checkout</button>
-      <button class="btn ghost" style="margin-top:8px;" onclick="closeModal('cartModal')">Continue browsing</button>
-    </div>
+<div class="modal-bg" id="cartModal">
+  <div class="modal">
+    <button class="close" onclick="closeModal('cartModal')">CLOSE ✕</button>
+    <h2 style="margin-bottom:18px;">Your cart</h2>
+    <div id="cartList" class="cart-list"></div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">0 EGP</span></div>
+    <button class="btn" onclick="openCartCheckout()">Proceed to checkout</button>
+    <button class="btn ghost" style="margin-top:8px;" onclick="closeModal('cartModal')">Continue browsing</button>
   </div>
 </div>
 
@@ -524,17 +402,7 @@ let products = [];
 let cart = [];
 let page = 1, currentProduct = null, editingId = null, selectedPay = "";
 
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add('in-view');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold:.12 });
-
 document.getElementById('waFab').href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent("Hi, I have a question about FARD");
-document.getElementById('footWaLink').href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent("Hi, I have a question about FARD");
 
 const headers = { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY, "Content-Type": "application/json" };
 const TABLE_URL = SUPABASE_URL + "/rest/v1/products";
@@ -563,21 +431,16 @@ function render(){
   const totalPages = Math.max(1, Math.ceil(products.length / PER_PAGE));
   if(page > totalPages) page = totalPages;
   const items = products.slice((page-1)*PER_PAGE, page*PER_PAGE);
-  grid.innerHTML = items.map((p, i) => `
-    <div class="card" onclick="showDetail('${p.id}')" style="transition-delay:${(i%PER_PAGE)*70}ms">
+  grid.innerHTML = items.map(p => `
+    <div class="card" onclick="showDetail('${p.id}')">
       <div class="card-media">
         <img src="${p.image || ''}" alt="${p.name}" loading="lazy" decoding="async">
-        <div class="stamp"><div class="n">N°${pieceNumber(p)}</div><div class="of">one of one</div></div>
       </div>
       <div class="info">
-        <span class="tag">Piece N°${pieceNumber(p)}</span>
         <div class="name">${p.name}</div>
         <div class="price">${p.price} EGP</div>
       </div>
     </div>`).join('');
-  requestAnimationFrame(() => {
-    document.querySelectorAll('#grid .card').forEach(el => revealObserver.observe(el));
-  });
   pager.innerHTML = Array.from({length: totalPages}, (_,i) => i+1)
     .map(n => `<button class="${n===page?'active':''}" onclick="page=${n}; render();">${n}</button>`).join('');
 }
@@ -592,10 +455,7 @@ function showDetail(id){
   document.getElementById('dCartBtn').textContent = isInCart(currentProduct.id) ? 'Remove from cart' : 'Add to cart';
   document.getElementById('detailModal').classList.add('show');
 }
-function closeModal(id){
-  document.getElementById(id).classList.remove('show');
-  if(id === 'cartModal') document.body.style.overflow = '';
-}
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
 
 // ---------- CART ----------
 function isInCart(id){ return cart.some(p => p.id == id); }
@@ -623,12 +483,7 @@ function cartTotal(){ return cart.reduce((sum,p) => sum + (parseFloat(p.price) |
 function renderCart(){
   const list = document.getElementById('cartList');
   if(cart.length === 0){
-    list.innerHTML = `
-      <div class="cart-empty">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M3 3h2l2.4 12.2a2 2 0 002 1.8h8.2a2 2 0 002-1.7L21 8H6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg>
-        <div class="t">Your cart is empty</div>
-        <div class="d">Every piece here is one of one — once<br>it's gone, browsing won't bring it back.</div>
-      </div>`;
+    list.innerHTML = '<div class="empty" style="padding:30px 0;">Your cart is empty — go pick a piece.</div>';
   } else {
     list.innerHTML = cart.map(p => `
       <div class="cart-item">
@@ -641,12 +496,10 @@ function renderCart(){
       </div>`).join('');
   }
   document.getElementById('cartTotal').textContent = cartTotal() + ' EGP';
-  document.getElementById('cartCountLabel').textContent = cart.length + (cart.length === 1 ? ' piece' : ' pieces');
 }
 function openCart(){
   renderCart();
   document.getElementById('cartModal').classList.add('show');
-  document.body.style.overflow = 'hidden';
 }
 function openCartCheckout(){
   if(cart.length === 0){ alert('Your cart is empty — add a piece first.'); return; }
