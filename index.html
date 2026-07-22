@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="FARD — hand-painted mugs, one copy of every design. When a piece sells, that design is retired for good.">
+<meta property="og:title" content="FARD — one-of-one hand-painted mugs">
+<meta property="og:description" content="Every FARD mug is hand-painted, start to finish. One copy exists. Once it sells, it's gone.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1C1A16">
 <title>FARD — one-of-one hand-painted mugs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,6 +120,20 @@
   .pager button.active{background:var(--glaze); color:#16150F; border-color:var(--glaze);}
   .empty,.loading{text-align:center; color:var(--muted); padding:70px 0; font-size:14px;}
 
+  .skeleton{background:var(--panel); border:1px solid var(--line); border-radius:4px; overflow:hidden;}
+  .skeleton .card-media{background:var(--bg-alt);}
+  .skeleton .sk-line{height:12px; border-radius:3px; background:var(--bg-alt); margin:0 16px;}
+  .skeleton .sk-line.name{width:70%; margin-top:14px;}
+  .skeleton .sk-line.price{width:35%; margin-top:8px; margin-bottom:16px;}
+  .skeleton .card-media, .skeleton .sk-line{position:relative; overflow:hidden;}
+  .skeleton .card-media::after, .skeleton .sk-line::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg, transparent, rgba(243,236,221,.06), transparent);
+    animation:shimmer 1.6s infinite;
+  }
+  @keyframes shimmer{ from{transform:translateX(-100%);} to{transform:translateX(100%);} }
+  @media (prefers-reduced-motion: reduce){ .skeleton .card-media::after, .skeleton .sk-line::after{animation:none;} }
+
   .modal-bg{position:fixed; inset:0; background:rgba(15,14,11,.72); display:none; align-items:center; justify-content:center; z-index:100; padding:16px;}
   .modal-bg.show{display:flex;}
   .modal{background:var(--panel); border:1px solid var(--line); border-radius:6px; max-width:460px; width:100%; max-height:90vh; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:24px;}
@@ -166,6 +186,20 @@
   .instagram-fab:hover{ background:#a2542f; color:var(--ink); }
 
   footer{text-align:center; padding:40px 16px 32px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); margin-top:50px; font-family:'Space Mono',monospace; letter-spacing:.04em;}
+  footer .foot-links{display:flex; justify-content:center; gap:18px; margin-bottom:14px;}
+  footer .foot-links a{color:var(--muted); text-decoration:none; transition:color .15s ease;}
+  footer .foot-links a:hover{color:var(--glaze);}
+  footer .foot-note{color:rgba(167,156,135,.6); font-size:10.5px; margin-top:8px;}
+
+  .craft{border-top:1px solid var(--line); margin-top:56px; padding:52px 20px;}
+  .craft-inner{max-width:900px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:36px;}
+  .craft-n{font-family:'Space Mono',monospace; font-size:11px; color:var(--oxide); letter-spacing:.08em;}
+  .craft-t{font-family:'Fraunces',serif; font-size:18px; font-weight:500; margin-top:8px; margin-bottom:8px;}
+  .craft-d{font-size:13px; color:var(--muted); line-height:1.7;}
+  @media (max-width:640px){
+    .craft{padding:36px 20px; margin-top:36px;}
+    .craft-inner{grid-template-columns:1fr; gap:26px;}
+  }
 
   #adminView{display:none; max-width:760px; margin:0 auto; padding:36px 20px;}
   .panel{background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:22px; margin-bottom:26px;}
@@ -256,10 +290,34 @@
     <p>Every FARD mug is hand-painted from first sketch to final glaze — one copy exists. The moment it sells, that design is retired for good.</p>
   </div>
   <div class="wrap">
-    <div id="grid" class="grid"><div class="loading">Loading the shelf…</div></div>
+    <div id="grid" class="grid">
+      <div class="card skeleton"><div class="card-media"></div><div class="sk-line name"></div><div class="sk-line price"></div></div>
+      <div class="card skeleton"><div class="card-media"></div><div class="sk-line name"></div><div class="sk-line price"></div></div>
+      <div class="card skeleton"><div class="card-media"></div><div class="sk-line name"></div><div class="sk-line price"></div></div>
+    </div>
     <div id="pager" class="pager"></div>
   </div>
-</div>
+
+  <div class="craft">
+    <div class="craft-inner">
+      <div class="craft-step">
+        <div class="craft-n">01</div>
+        <div class="craft-t">Thrown</div>
+        <div class="craft-d">Every mug starts on the wheel, shaped and fired before a single brushstroke touches it.</div>
+      </div>
+      <div class="craft-step">
+        <div class="craft-n">02</div>
+        <div class="craft-t">Painted once</div>
+        <div class="craft-d">Each design is hand-painted freehand — no stencils, no repeats. What you see is the only copy.</div>
+      </div>
+      <div class="craft-step">
+        <div class="craft-n">03</div>
+        <div class="craft-t">Glazed &amp; fired</div>
+        <div class="craft-d">A final glaze and second firing seal the piece — food-safe, dishwasher-safe, built to last.</div>
+      </div>
+    </div>
+  </div>
+  </div>
 
 <div id="adminView">
   <div id="loginBox">
@@ -290,7 +348,14 @@
   </div>
 </div>
 
-<footer>FARD — one-of-one mugs, hand-painted in-house</footer>
+<footer>
+  <div class="foot-links">
+    <a href="https://www.instagram.com/fard_mugs?igsh=bzJhZGg3YTV3dTZs" target="_blank">Instagram</a>
+    <a href="#" id="footWaLink" target="_blank">WhatsApp</a>
+  </div>
+  FARD — one-of-one mugs, hand-painted in-house
+  <div class="foot-note">Every piece is exactly as pictured — no two are ever repainted the same.</div>
+</footer>
 
 <div class="contact-fab-wrap">
   <div class="contact-fab-row">
@@ -403,6 +468,7 @@ let cart = [];
 let page = 1, currentProduct = null, editingId = null, selectedPay = "";
 
 document.getElementById('waFab').href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent("Hi, I have a question about FARD");
+document.getElementById('footWaLink').href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent("Hi, I have a question about FARD");
 
 const headers = { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY, "Content-Type": "application/json" };
 const TABLE_URL = SUPABASE_URL + "/rest/v1/products";
